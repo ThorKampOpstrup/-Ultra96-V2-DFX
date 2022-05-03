@@ -1,5 +1,4 @@
-#ifndef SETUP_
-#define SETUP_
+#pragma once
 
 #include <stdbool.h>
 #include "xil_types.h"
@@ -24,23 +23,18 @@
 //#define SEND_RF_REQUEST FALSE //!Not implemented yet
 
 //* DEFINE variables that contain axi gpio data
-u32 axi_gpio_rst_out = 0;
+//u32 axi_gpio_rst_out = 0;
 //uint32_t axi_gpio_req_ack_in = 0; //! Not implemented yet
 
 
 //* Choose init configurations
-bool config_0_active = 1;
+//bool config_0_active = 1;
 
 
 // Do not care about this
-u32 partial_bitstream_FileSizes[NAME_LENGTH];
-unsigned char *partial_bitstream_buffers[NAME_LENGTH];
-u32 partial_bitstream_index;
-
-XFpga XFpgaInstance = {0U};
-u32 xStatus=0;
-
-#endif //SETUP_
+//u32 partial_bitstream_FileSizes[NAME_LENGTH];
+//unsigned char *partial_bitstream_buffers[NAME_LENGTH];
+//u32 partial_bitstream_index;
 
 
 
