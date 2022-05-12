@@ -12,14 +12,18 @@
 class Partial_module
 {
 public:
-    u32 rst_pinN;
-    Axi_gpio_controller *rst_block;
+    u32 rst_pinN = 0;
+    Axi_gpio_controller *rst_block =NULL;
     SD_card *card;
     unsigned char *bitstream_buffer_ptr;
     u32 bitFile_fileSize;
     XFpga *XFpgaInstance_ref;
     unsigned char *KeyAddr = NULL;
     int status;
+
+    Partial_module(SD_card *card,
+                   const char *_file_name,
+                   XFpga *_XFpgaInstance_ref);
 
     Partial_module(int _rst_pinN,
                    Axi_gpio_controller *_rst_block,

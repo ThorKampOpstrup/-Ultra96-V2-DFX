@@ -40,33 +40,34 @@ void test()
 	Axi_gpio_controller LED(XPAR_AXI_GPIO_1_BASEADDR);
 	LED.clear_pin(LED_PIN);
 
-	Axi_gpio_controller partial_rst_block(XPAR_AXI_GPIO_0_BASEADDR);
+	//Axi_gpio_controller partial_rst_block(XPAR_AXI_GPIO_0_BASEADDR);
+	LED.set_pin(LED_PIN);
+
 
 	// write_test("0:/", "test1");
 	SD_card card("0:/");
 	cp_file(&card, "test_org.JPG", "test_cp.jpg");
 
-	Partial_module part_0(RST_PIN, &partial_rst_block, &card, "1_low.bit", &XFpgaInstance);
+	Partial_module part_0(&card, "1_low.bit", &XFpgaInstance);
+	//Partial_module part_0(RST_PIN, &partial_rst_block, &card, "1_low.bit", &XFpgaInstance);
 
 	part_0.reconfigure_PL(1);
 
-	Partial_module part_1(RST_PIN, &partial_rst_block, &card, "1_high.bit", &XFpgaInstance);
+	Partial_module part_1(&card, "1_high.bit", &XFpgaInstance);
+	// Partial_module part_1(RST_PIN, &partial_rst_block, &card, "1_high.bit", &XFpgaInstance);
 	//  LED.clear_pin(LED_PIN);
 
-	// LED.set_pin(LED_PIN);
-
-	partial_rst_block.set_pin(RST_PIN);
 
 	while (1)
 	{
 		LED.clear_pin(LED_PIN);
 		part_0.reconfigure_PL(1);
 		LED.set_pin(LED_PIN);
-		//usleep(10000);
+		usleep(100000);
 		LED.clear_pin(LED_PIN);
 		part_1.reconfigure_PL(1);
 		LED.set_pin(LED_PIN);
-		//usleep(10000);
+		usleep(100000);
 	}
 
 	// int data = 0;
