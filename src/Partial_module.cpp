@@ -1,7 +1,7 @@
 #include "SETUP.hpp"
 #include "../lib/Partial_module.hpp"
 #include "../lib/SD_card.hpp"
-#include "../lib/Axi_gpio_controller.hpp"
+#include "../lib/Axi_gpio_out_controller.hpp"
 #include "xil_types.h"
 #include <stdlib.h>
 
@@ -20,7 +20,7 @@ Partial_module::Partial_module(SD_card *_card,
 
 
 Partial_module::Partial_module(int _rst_pinN,
-                               Axi_gpio_controller *_rst_block,
+                               Axi_gpio_out_controller *_rst_block,
                                SD_card *_card,
                                const char *_file_name,
                                XFpga *_XFpgaInstance_ref)

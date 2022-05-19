@@ -15,7 +15,12 @@ private:
     long unmount();
 
 public:
-    SD_card(const char *);
+    /*****************************************************************************
+     * Constuctor for SD_card_
+     *
+     * @param pinN Pin to set
+     *****************************************************************************/
+    SD_card(const char * _path);
     long read_file(const char *file_name, void *dist_addr, u32 *bytes_read, u32 bytes_to_read);
     long write_file(const char *_file_name, void *src_addr, u32 size);
     int status;

@@ -1,4 +1,4 @@
-#include "../lib/Axi_gpio_controller.hpp"
+#include "../lib/Axi_gpio_out_controller.hpp"
 #include "../lib/Partial_module.hpp"
 //#include "../lib/read_files.hpp"
 #include "xparameters.h"
@@ -37,19 +37,18 @@ void test()
 	xStatus = XFpga_Initialize(&XFpgaInstance);
 	// xStatus = ScuGicInterrupt_Init(XPAR_SCUGIC_0_DEVICE_ID);
 
-	Axi_gpio_controller LED(XPAR_AXI_GPIO_1_BASEADDR);
+	Axi_gpio_out_controller LED(XPAR_AXI_GPIO_4_BASEADDR);
 	LED.clear_pin(LED_PIN);
 
-	//Axi_gpio_controller partial_rst_block(XPAR_AXI_GPIO_0_BASEADDR);
-	LED.set_pin(LED_PIN);
-
+	// Axi_gpio_out_controller partial_rst_block(XPAR_AXI_GPIO_3_BASEADDR);
+	// LED.set_pin(LED_PIN);
 
 	// write_test("0:/", "test1");
 	SD_card card("0:/");
-	cp_file(&card, "test_org.JPG", "test_cp.jpg");
+	// cp_file(&card, "test_org.JPG", "test_cp.jpg");
 
 	Partial_module part_0(&card, "1_low.bit", &XFpgaInstance);
-	//Partial_module part_0(RST_PIN, &partial_rst_block, &card, "1_low.bit", &XFpgaInstance);
+	// Partial_module part_0(RST_PIN, &partial_rst_block, &card, "1_low.bit", &XFpgaInstance);
 
 	part_0.reconfigure_PL(1);
 
@@ -57,17 +56,16 @@ void test()
 	// Partial_module part_1(RST_PIN, &partial_rst_block, &card, "1_high.bit", &XFpgaInstance);
 	//  LED.clear_pin(LED_PIN);
 
-
 	while (1)
 	{
-		LED.clear_pin(LED_PIN);
-		part_0.reconfigure_PL(1);
 		LED.set_pin(LED_PIN);
-		usleep(100000);
+		part_0.reconfigure_PL(0);
 		LED.clear_pin(LED_PIN);
-		part_1.reconfigure_PL(1);
+		// usleep(10000);
 		LED.set_pin(LED_PIN);
-		usleep(100000);
+		part_1.reconfigure_PL(0);
+		LED.clear_pin(LED_PIN);
+		// usleep(10000);
 	}
 
 	// int data = 0;
