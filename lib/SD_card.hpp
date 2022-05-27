@@ -1,7 +1,4 @@
 #pragma once
-#ifndef SD_
-#define SD_
-
 #include "ff.h"
 
 class SD_card
@@ -16,15 +13,13 @@ private:
 
 public:
     /*****************************************************************************
-     * Constuctor for SD_card_
+     * Constuctor for SD_card
      *
-     * @param pinN Pin to set
+     * @param mounting_path
      *****************************************************************************/
-    SD_card(const char * _path);
+    SD_card(const char *_path);
     long read_file(const char *file_name, void *dist_addr, u32 *bytes_read, u32 bytes_to_read);
     long write_file(const char *_file_name, void *src_addr, u32 size);
     int status;
     ~SD_card();
 };
-
-#endif //SD_

@@ -1,26 +1,37 @@
-// #pragma once
+#pragma once
 
-//#include <stdbool.h>
-//#include <stdlib.h>
 #include "SETUP.hpp"
 #include "SD_card.hpp"
-#include "Axi_gpio_out_controller.hpp"
-//#include "xil_types.h"
+#include "Axi_gpio_controller.hpp"
 #include "xilfpga.h"
 #include <stdlib.h>
 
 class Partial_module
 {
-public:
-    u32 rst_pinN = 0;
-    Axi_gpio_out_controller *rst_block = NULL;
-    SD_card *card;
+private:
+    u8 rst_pinN = 0;
+    Axi_gpio_controller *axi_block = NULL;
+    // SD_card *card;
     unsigned char *bitstream_buffer_ptr;
     u32 bitFile_fileSize;
     XFpga *XFpgaInstance_ref;
-    unsigned char *KeyAddr = NULL; // for future proofing
-    int status;
+    // unsigned char *KeyAddr = NULL; // for future proofing with the use of XFpga_BitStream_Load()
+    u32 status;
 
+public:
+    /*****************************************************************************
+     * constructer for a partial module
+     *
+     * @param bitfile reference to the bitfile location
+     *
+     * @param size size of the bitfile
+     *
+     * @param XFpgaInstance_ref Where to put the status of the fpga
+     *****************************************************************************/
+
+    Partial_module(unsigned char *bitfile,
+                   u32 size,
+                   XFpga *_XFpgaInstance_ref);
     /*****************************************************************************
      * constructer for a partial module
      *
@@ -35,26 +46,17 @@ public:
                    XFpga *_XFpgaInstance_ref);
 
     /****************************************************************************
-     * Overload constructer for a partial module
+     * Set rst block reference
      *
-     * @param rst_pin Pin in rst_block that resets block of type "Axi_gpio_out_controller"
+     * @param rst_pin Pin in rst_block that resets block of type "Axi_gpio_controller"
      *
      * @param rst_block Reference to rst_block og type A
-     *
-     * @param card Reference to the sd card mount position
-     *
-     * @param file_name Name of the bitfile on the mounted position
-     *
-     * @param XFpgaInstance_ref Where to put the status of the fpga
      *****************************************************************************/
-    Partial_module(int _rst_pinN,
-                   Axi_gpio_out_controller *_rst_block,
-                   SD_card *card,
-                   const char *_file_name,
-                   XFpga *_XFpgaInstance_ref);
+    void set_rst_block(u8 _rst_pinN,
+                       Axi_gpio_controller *axi_block);
 
     /*****************************************************************************
-     * reconfugires the partial module
+     * reconfigures the partial module
      *
      * @param en_rst Reset block on reconfiguration, will only reset if a rst_block is defined.
      *****************************************************************************/
