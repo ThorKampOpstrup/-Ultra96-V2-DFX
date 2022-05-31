@@ -23,11 +23,7 @@ void cp_file(SD_card *_card, const char *_src, const char *_dist)
 
 void test_partial()
 {
-	// int data = (0x1 << 0); // set bit/pinN
-	// Xil_Out32(XPAR_AXI_GPIO_1_BASEADDR, data);
-
 	xStatus = XFpga_Initialize(&XFpgaInstance);
-	// xStatus = ScuGicInterrupt_Init(XPAR_SCUGIC_0_DEVICE_ID);
 
 	Axi_gpio_controller LED(LED_BASEADDR);
 	LED.set_pin(LED_PIN);
@@ -38,24 +34,14 @@ void test_partial()
 	// write_test("0:/", "test1");
 	SD_card card("0:/");
 	// cp_file(&card, "ORG.JPG", "CP.JPG");
-	//Bit_file _1_low;
-	//_1_low.name = "1_low.bit";
-	//card.get_ptr_to_file(_1_low.name, _1_low.ptr, _1_low.size);
 
-	//Bit_file _1_high;
-	//_1_high.name = "1_high.bit";
-	//card.get_ptr_to_file(_1_high.name, _1_high.ptr, _1_high.size);
-
-
-	//Partial_module part_0(&_1_low.ptr, _1_low.size, &XFpgaInstance, &xStatus);
 	Partial_module part_0(&card, "1_low.bit", &XFpgaInstance, &xStatus);
-	// Partial_module part_0(RST_PIN, &partial_rst_block, &card, "1_low.bit", &XFpgaInstance);
+	// Partial_module part_0(RST_PIN, &partial_rst_block, &card, "1_low.bit", &XFpgaInstance, &xStatus);
 
-	//Partial_module part_1(&_1_high.ptr, _1_high.size, &XFpgaInstance, &xStatus);
 	Partial_module part_1(&card, "1_high.bit", &XFpgaInstance, &xStatus);
-	// Partial_module part_1(RST_PIN, &partial_rst_block, &card, "1_high.bit", &XFpgaInstance);
+	// Partial_module part_1(RST_PIN, &partial_rst_block, &card, "1_high.bit", &XFpgaInstance, &xStatus);
 	//  LED.clear_pin(LED_PIN);
-	// spart_0.reconfigure_PL(1);
+	// part_0.reconfigure_PL(1);
 	// part_1.set_rst_block(RST_PIN,partial_rst_block);
 
 	u32 data_points = 100;
@@ -68,7 +54,7 @@ void test_partial()
 	part_1.reconfigure_PL(1);
 	u32 region_selector = 0;
 
-	XTime_GetTime(&start);
+	//XTime_GetTime(&start);
 	// while (region_selector < data_points)
 	while (1)
 	{
