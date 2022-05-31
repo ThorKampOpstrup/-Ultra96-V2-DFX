@@ -11,12 +11,11 @@ class Partial_module
 private:
     u8 rst_pinN = 0;
     Axi_gpio_controller *axi_block = NULL;
-    // SD_card *card;
     unsigned char *bitstream_buffer_ptr;
     u32 bitFile_fileSize;
     XFpga *XFpgaInstance_ref;
+    u32 *xStatus_ref;
     // unsigned char *KeyAddr = NULL; // for future proofing with the use of XFpga_BitStream_Load()
-    u32 status;
 
 public:
     /*****************************************************************************
@@ -26,12 +25,15 @@ public:
      *
      * @param size size of the bitfile
      *
-     * @param XFpgaInstance_ref Where to put the status of the fpga
+     * @param XFpgaInstance_ref An FPGA tag
+     * 
+     * @param xStatus_ref Where to put the status of the fpga
      *****************************************************************************/
 
     Partial_module(unsigned char *bitfile,
                    u32 size,
-                   XFpga *_XFpgaInstance_ref);
+                   XFpga *_XFpgaInstance_ref,
+                   u32 *xStatus_ref);
     /*****************************************************************************
      * constructer for a partial module
      *
@@ -39,11 +41,14 @@ public:
      *
      * @param file_name Name of the bitfile on the mounted position
      *
-     * @param XFpgaInstance_ref Where to put the status of the fpga
+     * @param XFpgaInstance_ref An FPGA tag
+     * 
+     * @param xStatus_ref Where to put the status of the fpga
      *****************************************************************************/
     Partial_module(SD_card *card,
                    const char *_file_name,
-                   XFpga *_XFpgaInstance_ref);
+                   XFpga *_XFpgaInstance_ref,
+                   u32 *xStatus_ref);
 
     /****************************************************************************
      * Set rst block reference

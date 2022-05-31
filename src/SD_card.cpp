@@ -34,14 +34,11 @@ long SD_card::read_file(const char *file_name, void *dist_addr, u32 *bytes_read,
     if (res)
         return XST_FAILURE;
 
-    // file_size = fil.fsize;
     res = f_lseek(&fil, 0);
     if (res)
         return XST_FAILURE;
 
-    //Xil_Out32(XPAR_AXI_GPIO_4_BASEADDR, 1);
     res = f_read(&fil, dist_addr, bytes_to_read, bytes_read);
-    //Xil_Out32(XPAR_AXI_GPIO_4_BASEADDR, 0);
 
     if (res)
         return XST_FAILURE;
@@ -50,7 +47,6 @@ long SD_card::read_file(const char *file_name, void *dist_addr, u32 *bytes_read,
     if (res)
         return XST_FAILURE;
 
-    // Xil_DCacheFlush();
     return XST_SUCCESS;
 }
 
